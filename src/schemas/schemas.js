@@ -71,7 +71,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.font",
                     "container": ".gpiic-fd-prefsEditor-panel-font",
-                    "template": "%templatePrefix/yesNo.html",
+                    "template": "%templatePrefix/fontYesNo.html",
                     "message": "%messagePrefix/font.json"
                 }
             },

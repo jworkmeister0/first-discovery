@@ -8,6 +8,8 @@ You may obtain a copy of the License at
 https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 */
 
+//TODO: the line and letter spacing values are reverted to default when the
+//      textSize is adjusted
 (function ($, fluid) {
 
     "use strict";
@@ -141,12 +143,13 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         // @ See getLineHeightMultiplier() & http://issues.fluidproject.org/browse/FLUID-4500
         if (that.initialSize) {
             var targetLineSpace = times * that.initialSize;
+            // sets line-height for slider and preview
+            that.container.css("line-height", targetLineSpace);
+            // sets line-height for instruction text
             $("p").css("line-height", targetLineSpace);
-
-            //TODO: the line below applies spacing to tooltips, etc
-            //      but it breaks icons when the textSize == maxAmount - 1
-            //      or when textSize == minAmount + 1
-            //container.css("line-height", targetLineSpace);
+            // Sets line-height in a way that voice toggle doesn't
+            // trample the setting
+            $("#gpiic-fd").css("line-height", targetLineSpace);
         }
     };
 
@@ -184,7 +187,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         invokers: {
             set: {
                 funcName: "gpii.firstDiscovery.enactor.letterSpace.set",
-                args: ["{arguments}.0", "{that}", "{that}.container", "{that}.getLetterSpaceMultiplier"]
+                args: ["{arguments}.0", "{that}", "{that}.getLetterSpaceMultiplier"]
             },
             getTextSizeInPx: {
                 funcName: "gpii.firstDiscovery.enactor.letterSpace.getTextSizeInPx",
@@ -231,7 +234,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         return Math.round(parseFloat(letterSpace) / fontSize * 100) / 100;
     };
 
-    gpii.firstDiscovery.enactor.letterSpace.set = function (times, that, container, getLetterSpaceMultiplierFunc) {
+    gpii.firstDiscovery.enactor.letterSpace.set = function (times, that, getLetterSpaceMultiplierFunc) {
         times = times || 1;
         if (!that.initialSize) {
             that.initialSize = getLetterSpaceMultiplierFunc();
@@ -239,13 +242,10 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 
         if (that.initialSize) {
             var targetLetterSpace = times * that.initialSize;
-            //container.css("letter-spacing", targetLetterSpace);
+            // Applies to tooltips
+            that.container.css("letter-spacing", targetLetterSpace);
+            // Applies to instruction text, etc
             $("#gpiic-fd").css("letter-spacing", targetLetterSpace);
-            // $("p").css("letter-spacing", targetLetterSpace);
-            // container.css("letter-spacing", targetLetterSpace);
-            //$("#gpiic-fd").css("letter-spacing", targetLetterSpace);
-            // that.root.css("letter-spacing", targetLetterSpace);
-
         }
     };
 
